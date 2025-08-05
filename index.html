@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Insights</title>
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f4fa.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4caf50;
+            --card-bg: #ffffff;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="3" fill="%234cc9f010"/><circle cx="50" cy="80" r="4" fill="%234cc9f010"/><circle cx="80" cy="40" r="2" fill="%234cc9f010"/><circle cx="70" cy="10" r="3" fill="%234cc9f010"/></svg>');
+            background-size: 400px;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(114, 9, 183, 0.05) 0%, rgba(67, 97, 238, 0.03) 70%, transparent 100%);
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(76, 201, 240, 0.3);
+            z-index: -1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--gray);
+        }
+
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(67, 97, 238, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(67, 97, 238, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Content Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            max-width: 700px;
+            margin: 20px auto 0;
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--accent);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .feature-status {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+
+        .feature-status.available {
+            color: var(--success);
+        }
+
+        .feature-status.unavailable {
+            color: var(--gray);
+        }
+
+        .feature-status i {
+            margin-right: 8px;
+        }
+
+        /* Examples Section */
+        .examples-table {
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 18px 25px;
+            text-align: left;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(67, 97, 238, 0.03);
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        tbody tr:nth-child(even):hover {
+            background: rgba(67, 97, 238, 0.03);
+        }
+
+        /* Platforms Section */
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .platform-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .platform-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .platform-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .platform-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .popular-badge {
+            display: inline-block;
+            background: rgba(255, 193, 7, 0.2);
+            color: #ff9800;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        /* Webinar Providers */
+        .providers {
+            background: linear-gradient(135deg, #f0f4ff 0%, #f9f0ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .providers::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(114, 9, 183, 0.05);
+            z-index: 0;
+        }
+
+        .providers::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(67, 97, 238, 0.05);
+            z-index: 0;
+        }
+
+        .provider-list {
+            position: relative;
+            z-index: 1;
+        }
+
+        .provider-item {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+
+        .provider-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .provider-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-right: 25px;
+        }
+
+        .provider-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .provider-info p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .provider-tag {
+            display: inline-block;
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Registration Section */
+        .registration {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .registration::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 70%, transparent 100%);
+            z-index: 0;
+        }
+
+        .registration .section-header h2,
+        .registration .section-header p {
+            color: white;
+        }
+
+        .registration .section-header h2::after {
+            background: var(--accent);
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(67, 97, 238, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a i {
+            margin-right: 10px;
+            font-size: 0.8rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                right: 1px;
+                background: #fff;
+                flex-direction: column;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+                border-radius: 10px;
+                padding: 20px 0;
+                z-index: 999;
+                min-width: 180px;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .nav-links li {
+                margin: 15px 0;
+                margin-left: 0;
+                text-align: center;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 25px;
+            }
+        }
+
+        /* Hide mobile menu button on desktop */
+.mobile-menu-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#hero" class="logo">
+                    <i class="fas fa-video"></i>Webinars
+                </a>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#examples">Examples</a></li>
+                    <li><a href="#platforms">Platforms</a></li>
+                    <li><a href="#providers">Providers</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <h1>Master the Art of <span>Webinars</span></h1>
+            <p>Webinars are online seminars – live or pre-recorded events conducted over the internet, usually for education, training, or presentations. The word comes from "web" + "seminar."</p>
+            <div class="hero-btns">
+                <a href="#registration" class="btn btn-primary">Join a Webinar</a>
+                <a href="#footer" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Key Features of Webinars</h2>
+                <p>Discover what makes webinars an essential tool for modern communication and learning</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Scheduled Time</h3>
+                    <p>Like a regular seminar, webinars happen at set times, allowing participants to plan accordingly.</p>
+                    <div class="feature-status unavailable">
+                        <i class="fas fa-times-circle"></i>
+                        Not always available on-demand
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Live or Recorded</h3>
+                    <p>Webinars can be streamed live for real-time interaction or made available later as a recording.</p>
+                    <div class="feature-status available">
+                        <i class="fas fa-check-circle"></i>
+                        Available in both formats
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Interactive Elements</h3>
+                    <p>Engage your audience with chat, Q&A sessions, polls, and other interactive features.</p>
+                    <div class="feature-status unavailable">
+                        <i class="fas fa-times-circle"></i>
+                        Not always implemented
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Educational Value</h3>
+                    <p>Commonly used in professional development, tech demos, online courses, and business promotion.</p>
+                    <div class="feature-status available">
+                        <i class="fas fa-check-circle"></i>
+                        Primary purpose of webinars
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Audience Engagement</h3>
+                    <p>Designed to connect with large audiences, allowing for real-time feedback and interaction.</p>
+                    <div class="feature-status available">
+                        <i class="fas fa-check-circle"></i>
+                        High audience engagement
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytics and Reporting</h3>
+                    <p>Most platforms offer detailed analytics to track engagement and performance.</p>
+                    <div class="feature-status unavailable">
+                        <i class="fas fa-times-circle"></i>
+                        Analytics not always available
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section id="examples" style="background: #f8faff;">
+        <div class="container">
+            <div class="section-header">
+                <h2>Webinar Applications</h2>
+                <p>Webinars are used across various industries for different purposes</p>
+            </div>
+            
+            <div class="examples-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Example Topics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Education</td>
+                            <td>Online classes, exam prep sessions</td>
+                        </tr>
+                        <tr>
+                            <td>Business</td>
+                            <td>Product launches, customer onboarding</td>
+                        </tr>
+                        <tr>
+                            <td>Programming/Tech</td>
+                            <td>Framework tutorials, dev Q&A</td>
+                        </tr>
+                        <tr>
+                            <td>Marketing</td>
+                            <td>Strategy training, social media trends</td>
+                        </tr>
+                        <tr>
+                            <td>Health</td>
+                            <td>Medical updates, mental health talks</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platforms Section -->
+    <section id="platforms">
+        <div class="container">
+            <div class="section-header">
+                <h2>Webinar Platforms</h2>
+                <p>Top platforms that host webinars for different needs and audience sizes</p>
+            </div>
+            
+            <div class="platforms-grid">
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Zoom Webinars</h3>
+                    <p>The most common platform for professional webinars with robust features.</p>
+                    <span class="popular-badge">Most Popular</span>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <h3>Google Meet</h3>
+                    <p>Ideal for smaller groups, integrated with Google Workspace.</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Microsoft Teams</h3>
+                    <p>Great for corporate environments and Office 365 users.</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>GoToWebinar</h3>
+                    <p>Specialized webinar platform with marketing tools.</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Webex</h3>
+                    <p>Enterprise-grade solution for large organizations.</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <h3>YouTube Live</h3>
+                    <p>Free option with broad reach but fewer interactive features.</p>
+                </div>
+
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Facebook Live</h3>
+                    <p>Good for casual webinars and reaching social media audiences.</p>
+                </div>
+
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fas fa-broadcast-tower"></i>
+                    </div>
+                    <h3>Livestorm</h3>
+                    <p>Browser-based platform with strong analytics and engagement tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Webinar Providers -->
+    <section id="providers" class="providers">
+        <div class="container">
+            <div class="section-header">
+                <h2>Web Development Webinar Providers</h2>
+                <p>Top platforms offering webinars for developers and tech professionals</p>
+            </div>
+            
+            <div class="provider-list">
+                <div class="provider-item">
+                    <div class="provider-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="provider-info">
+                        <h3>MIDI Web Desk Events</h3>
+                        <p>By Martin (creator of Thread)</p>
+                        <p>Course web initiatives, JavaScript, CSS, and more.</p>
+                        <span class="provider-tag">Development</span>
+                    </div>
+                </div>
+                
+                <div class="provider-item">
+                    <div class="provider-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="provider-info">
+                        <h3>FreeConfCompy YouTube Webinars</h3>
+                        <p>Free coding webinars, tutorials, and bootcamps.</p>
+                        <p>Multi-hour detailed sessions on various technologies.</p>
+                        <span class="provider-tag">Free Resources</span>
+                    </div>
+                </div>
+                
+                <div class="provider-item">
+                    <div class="provider-icon">
+                        <i class="fab fa-microsoft"></i>
+                    </div>
+                    <div class="provider-info">
+                        <h3>Microsoft Users Events</h3>
+                        <p>Live and recorded webinars on Azure, .NET, VSCode, and web technologies.</p>
+                        <span class="provider-tag">Microsoft Tech</span>
+                    </div>
+                </div>
+                
+                <div class="provider-item">
+                    <div class="provider-icon">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <div class="provider-info">
+                        <h3>Google Developers Webinars</h3>
+                        <p>Webinars on Chrome, Angular, Firebase, and web performance.</p>
+                        <span class="provider-tag">Google Ecosystem</span>
+                    </div>
+                </div>
+
+                <div class="provider-item">
+                    <div class="provider-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="provider-info">
+                        <h3>Codecademy Live Sessions</h3>
+                        <p>Interactive coding webinars on Python, JavaScript, and more.</p>
+                        <span class="provider-tag">Interactive Learning</span>
+                    </div>
+                </div>
+
+                <div class="provider-item">
+                    <div class="provider-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="provider-info">
+                        <h3>MDN Web Docs Webinars</h3>
+                        <p>Webinars on web standards, HTML, CSS, and JavaScript.</p>
+                        <span class="provider-tag">Web Standards</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Section -->
+    <section id="registration" class="registration">
+        <div class="container">
+            <div class="section-header">
+                <h2>Join Our Next Webinar</h2>
+                <p>Register now to secure your spot in our upcoming professional development webinar</p>
+            </div>
+            
+            <div class="form-container">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company">Company/Organization</label>
+                        <input type="text" id="company" class="form-control" placeholder="Where do you work?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="interest">Area of Interest</label>
+                        <select id="interest" class="form-control" required>
+                            <option value="">Select your interest</option>
+                            <option value="webdev">Web Development</option>
+                            <option value="marketing">Digital Marketing</option>
+                            <option value="design">UI/UX Design</option>
+                            <option value="business">Business Strategy</option>
+                            <option value="data">Data Science</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Register Now</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container" id="footer">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>WebinarHub</h3>
+                    <p>Your premier destination for professional webinars and online learning experiences.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/jahidads1" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/jahidhasan_tw" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://bd.linkedin.com/in/jahidads" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/jahidhasan2.0ff/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@jahidads" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://jahidads.github.io/Portfolio/" target="_blank"><i class="fas fa-chevron-right"></i> Portfolio</a></li>
+                        <li><a href="https://jahidads.github.io/CyberShield/" target="_blank"><i class="fas fa-chevron-right"></i> CyberShield</a></li>
+                        <li><a href="https://jahidads.github.io/Cyber-Security/" target="_blank"><i class="fas fa-chevron-right"></i> Cybersecurity</a></li>
+                        <li><a href="https://jahidads.github.io/business-portfolio/" target="_blank"><i class="fas fa-chevron-right"></i> BizName</a></li>
+                        <li><a href="https://jahidads.github.io/Developer-portfolio/" target="_blank"><i class="fas fa-chevron-right"></i> jahidads.dev</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://jahidads.github.io/Blog/" target="_blank"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                        <li><a href="https://jahidads.github.io/E-Book/" target="_blank"><i class="fas fa-chevron-right"></i> E-Book</a></li>
+                        <li><a href="https://riverside.com/blog/how-to-create-a-webinar" target="_blank"><i class="fas fa-chevron-right"></i> Webinar Guides</a></li>
+                        <li><a href="https://jahidads.github.io/Case-Studies/" target="_blank"><i class="fas fa-chevron-right"></i> Case Studies</a></li>
+                        <li><a href="https://wa.me/8801308839759" target="_blank"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://maps.app.goo.gl/1qc9h18oF6CrfNPA7" target="_blank"><i class="fas fa-map-marker-alt"></i> Ekorgara Road, Bottoli 5900</a></li>
+                        <li><a href="tel:+8801308839759"><i class="fas fa-phone"></i> +880 13088 39759</a></li>
+                        <li><a href="mailto:jahidads.web@gmail.com"><i class="fas fa-envelope"></i> jahidads.web@gmail.com</a></li>
+                        <li><a href="https://www.timeanddate.com/time/zone/bangladesh/dhaka" target="_blank"><i class="fas fa-clock"></i> Mon-Fri: 9AM - 6PM</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 WebinarHub. Designed by <i class="fas fa-heart" style="color:#ff4d94;"></i> Jahid Hasan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Form submission
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for registering! You will receive a confirmation email shortly.');
+            form.reset();
+        });
+    }
+
+    // Mobile menu toggle
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+        // Hide menu when a link is clicked (for better UX)
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('show');
+            });
+        });
+    }
+});
+    </script>
+</body>
+</html>
